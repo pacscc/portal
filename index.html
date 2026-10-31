@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Alerta Climático EEEP Sandra Carvalho Costa (PAC-SCC)</title>
+    <style>
+        :root {
+            --primary: #d32f2f;
+            --secondary: #ff9800;
+            --dark: #212121;
+            --light: #f5f5f5;
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--light); 
+            color: var(--dark); 
+            margin: 0; 
+            padding: 0; 
+        }
+        header { 
+            background-color: var(--dark); 
+            color: white; 
+            padding: 2rem; 
+            text-align: center; 
+            border-bottom: 5px solid var(--primary); 
+        }
+        .container { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 2rem; 
+        }
+        .module { 
+            background: white; 
+            border-radius: 8px; 
+            padding: 2rem; 
+            margin-bottom: 2rem; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        }
+        h1 { margin: 0; font-size: 2.2rem; }
+        h2 { 
+            color: var(--primary); 
+            border-bottom: 2px solid var(--secondary); 
+            padding-bottom: 0.5rem; 
+            margin-top: 0;
+        }
+        .grid-container { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 2px; 
+            margin-top: 1.5rem; 
+            max-height: 400px; 
+            overflow-y: auto; 
+            background: #eee; 
+            padding: 10px; 
+            border-radius: 4px; 
+        }
+        .tiny-square { 
+            width: 16px; 
+            height: 16px; 
+            background-color: var(--primary); 
+            opacity: 0.85; 
+            border-radius: 2px;
+        }
+        .btn { 
+            background-color: var(--secondary); 
+            color: white; 
+            border: none; 
+            padding: 0.75rem 1.5rem; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            font-size: 1rem; 
+        }
+        .btn:hover { background-color: #e68a00; }
+        .slider-container { margin: 2rem 0; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .bar-container { 
+            width: 100%; 
+            background-color: #ddd; 
+            border-radius: 4px; 
+            overflow: hidden; 
+            margin-top: 1rem; 
+            height: 35px;
+        }
+        .sim-bar { 
+            height: 100%; 
+            width: 0%; 
+            background-color: var(--secondary); 
+            transition: width 0.4s ease, background-color 0.4s ease; 
+        }
+        .alert-box { 
+            padding: 1rem; 
+            border-radius: 4px; 
+            margin-top: 1rem; 
+            font-weight: bold; 
+        }
+        footer { 
+            background: var(--dark); 
+            color: white; 
+            text-align: center; 
+            padding: 1rem; 
+            margin-top: 2rem; 
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Portal de Alerta Climático</h1>
+    <p>EEEP Sandra Carvalho Costa (PAC-SCC) - Do Brasil a Jijoca de Jericoacoara</p>
+</header>
+
+<div class="container">
+    
+    <!-- Módulo 1 -->
+    <section class="module">
+        <h2>1. Geometria do Desastre</h2>
+        <p>A pesquisa original utilizou o município de Fortaleza, com área territorial de 312 km², como base[cite: 4, 8, 9]. Para um impacto ainda mais direto em nossa comunidade, recalculamos as proporções utilizando a extensão territorial de <strong>Jijoca de Jericoacoara</strong> (209 km²).</p>
+        <p>Em setembro de 2024, a área queimada no bioma Amazônia foi de 62.925 km²[cite: 4, 8, 9]. No mesmo mês, o bioma Cerrado registrou uma destruição de 80.029 km²[cite: 4, 9]. Selecione o bioma para visualizar quantas "Jijocas" desapareceram em apenas 30 dias.</p>
+        
+        <div style="margin: 1.5rem 0;">
+            <label for="biomaSelect"><strong>Selecione o Bioma Destruído:</strong></label><br>
+            <select id="biomaSelect" style="padding: 0.5rem; font-size: 1rem; margin-top: 0.5rem;">
+                <option value="amazonia">Amazônia - Setembro/2024 (62.925 km²)</option>
+                <option value="cerrado">Cerrado - Setembro/2024 (80.029 km²)</option>
+            </select>
+            <button class="btn" onclick="updateGeometria()" style="margin-left: 10px;">Aplicar Proporção</button>
+        </div>
+
+        <div id="calcResult" style="font-size: 1.2rem; color: var(--primary);"></div>
+        <div class="grid-container" id="gridSquares"></div>
+    </section>
+
+    <!-- Módulo 2 -->
+    <section class="module">
+        <h2>2. O Futuro em Números (Simulador Exponencial)</h2>
+        <p>O acompanhamento oficial demonstrou que o valor inicial da área queimada era de 2.052 km² no mês de abril[cite: 2]. O avanço não linear das chamas sugeriu a adoção de um modelo matemático, regido pela função f(x) = 2052 * 2^x[cite: 2].</p>
+        <p>Esta função revela que o estrago dobra a cada mês durante a fase mais seca[cite: 2]. Use o controle abaixo para observar a catástrofe matemática.</p>
+        
+        <div class="slider-container">
+            <label for="monthSlider"><strong>Mês de avanço da seca (x): <span id="monthValue">0</span> (Abril)</strong></label>
+            <input type="range" id="monthSlider" min="0" max="6" value="0" oninput="updateSimulator()">
+        </div>
+
+        <div id="simResult" style="font-size: 1.5rem; text-align: center;">Área Projetada: <strong>2.052 km²</strong></div>
+        <div class="bar-container">
+            <div class="sim-bar" id="simBar" style="width: 2%;"></div>
+        </div>
+        
+        <div class="alert-box" id="simAlert" style="background-color: #e2e3e5; color: #383d41;">
+            Situação sob controle inicial.
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.85rem; color: #555;">* A projeção calculada pela função para o quinto mês (setembro) totalizou 65.664 km²[cite: 3]. Este módulo reflete o conceito de gatilhos de alerta automático criados para sistemas da Defesa Civil[cite: 3].</p>
+    </section>
+
+    <!-- Módulo 3 -->
+    <section class="module">
+        <h2>3. Conexão Jijoca e Caatinga</h2>
+        <p>A configuração espacial dessa destruição ambiental afeta a vida coletiva muito além das suas bordas[cite: 4]. O que a matemática modelou acima resulta em um desastre climático em cadeia:</p>
+        <ul style="line-height: 1.6;">
+            <li>Uma extensão continental de queimadas nestes biomas altera os microclimas do país todo[cite: 4].</li>
+            <li>As cinzas e fumaças comprometem severamente a saúde pública e a qualidade do ar, atingindo locais distantes[cite: 4].</li>
+            <li>A alteração nas chuvas agrava as estiagens na Caatinga e impacta o turismo sustentável no Parque Nacional de Jericoacoara.</li>
+            <li>Demonstrar visualmente que as manchas de calor equivalem a centenas de cidades gera uma percepção real da dimensão do impacto[cite: 8, 9].</li>
+        </ul>
+    </section>
+
+</div>
+
+<footer>
+    <p>Criado para o Portal de Alerta Climático - EEEP Sandra Carvalho Costa. Design com HTML, CSS e Matemática Aplicada.</p>
+</footer>
+
+<script>
+    function updateGeometria() {
+        const biome = document.getElementById("biomaSelect").value;
+        const area = biome === 'amazonia' ? 62925 : 80029;
+        const cityArea = 209;
+        const ratio = Math.floor(area / cityArea);
+        
+        const resultDiv = document.getElementById("calcResult");
+        const biomeName = biome === 'amazonia' ? 'na Amazônia' : 'no Cerrado';
+        
+        resultDiv.innerHTML = `A área queimada ${biomeName} engoliria aproximadamente <strong>${ratio} vezes</strong> o território de Jijoca de Jericoacoara!`;
+        
+        const grid = document.getElementById("gridSquares");
+        grid.innerHTML = "";
+        for(let i = 0; i < ratio; i++) {
+            let sq = document.createElement("div");
+            sq.className = "tiny-square";
+            sq.title = "1 Jijoca de Jericoacoara (209 km²)";
+            grid.appendChild(sq);
+        }
+    }
+
+    function updateSimulator() {
+        const month = parseInt(document.getElementById("monthSlider").value);
+        const initial = 2052;
+        const projectedArea = initial * Math.pow(2, month);
+        
+        const monthNames = ["Abril (x=0)", "Maio (x=1)", "Junho (x=2)", "Julho (x=3)", "Agosto (x=4)", "Setembro (x=5)", "Outubro (x=6)"];
+        document.getElementById("monthValue").innerText = monthNames[month];
+        
+        document.getElementById("simResult").innerHTML = `Área Projetada: <strong>${projectedArea.toLocaleString('pt-BR')} km²</strong>`;
+        
+        const maxArea = initial * Math.pow(2, 6);
+        const percent = (projectedArea / maxArea) * 100;
+        const bar = document.getElementById("simBar");
+        bar.style.width = percent + "%";
+        
+        const alertBox = document.getElementById("simAlert");
+        
+        if (month <= 1) {
+            bar.style.backgroundColor = "#ffc107";
+            alertBox.style.backgroundColor = "#fff3cd";
+            alertBox.style.color = "#856404";
+            alertBox.innerText = "Alerta Amarelo: Aceleração iniciada.";
+        } else if (month <= 3) {
+            bar.style.backgroundColor = "#fd7e14";
+            alertBox.style.backgroundColor = "#f8d7da";
+            alertBox.style.color = "#721c24";
+            alertBox.innerText = "Alerta Laranja: Gatilho de Alerta Automático de Defesa Civil Ativado!";
+        } else {
+            bar.style.backgroundColor = "#d32f2f";
+            alertBox.style.backgroundColor = "#721c24";
+            alertBox.style.color = "#fff";
+            alertBox.innerText = "Emergência Nacional! Destruição matemática em proporções incontroláveis.";
+        }
+    }
+
+    // Dispara a visualização automaticamente ao carregar
+    window.onload = function() {
+        updateGeometria();
+    };
+</script>
+
+</body>
+</html>
