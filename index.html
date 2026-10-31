@@ -174,8 +174,6 @@
     .compare-line b { color: #e2eaf0; }
     .track { height: 7px; border-radius: 100px; background: rgba(255,255,255,.075); overflow: hidden; }
     .track > span { display: block; height: 100%; border-radius: inherit; }
-    .track .am { width: 78.6%; background: #fcab72; }
-    .track .ce { width: 100%; background: #ff6d4d; }
     .model-card { margin-top: 20px; display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 20px; }
     .model-card h2 { font-size: 22px; margin-top: 10px; }
     .model-card p { max-width: 800px; margin-bottom: 0; line-height: 1.7; font-size: 14px; }
@@ -363,14 +361,17 @@
         <div class="hero-visual" aria-hidden="true">
           <div class="radar-rings"></div>
           <div class="orbital"><svg class="ico"><use href="#icon-flame"></use></svg></div>
-          <div class="orbital-label label-one"><small>Amazônia</small><strong>62.925 km²</strong></div>
-          <div class="orbital-label label-two"><small>Cerrado</small><strong>80.029 km²</strong></div>
+          <div class="orbital-label label-one"><small>Cerrado</small><strong>185.198 km²</strong></div>
+          <div class="orbital-label label-two"><small>Amazônia</small><strong>151.285 km²</strong></div>
         </div>
       </div>
       <div class="metrics" aria-label="Indicadores utilizados no projeto">
-        <article class="metric"><div class="metric-label">Área queimada · Amazônia</div><div class="metric-value">62.925 <span>km²</span></div><span class="metric-note">Setembro de 2024</span></article>
-        <article class="metric"><div class="metric-label">Área queimada · Cerrado</div><div class="metric-value">80.029 <span>km²</span></div><span class="metric-note">Setembro de 2024</span></article>
-        <article class="metric"><div class="metric-label">Referência · Jijoca</div><div class="metric-value">209 <span>km²</span></div><span class="metric-note">Área adotada na comparação</span></article>
+        <article class="metric"><div class="metric-label">Cerrado</div><div class="metric-value">185.198 <span>km²</span></div><span class="metric-note">Acumulado 2024 (até Set)</span></article>
+        <article class="metric"><div class="metric-label">Amazônia</div><div class="metric-value">151.285 <span>km²</span></div><span class="metric-note">Acumulado 2024 (até Set)</span></article>
+        <article class="metric"><div class="metric-label">Mata Atlântica</div><div class="metric-value">38.771 <span>km²</span></div><span class="metric-note">Acumulado 2024 (até Set)</span></article>
+        <article class="metric"><div class="metric-label">Pantanal</div><div class="metric-value">21.557 <span>km²</span></div><span class="metric-note">Acumulado 2024 (até Set)</span></article>
+        <article class="metric"><div class="metric-label">Caatinga</div><div class="metric-value">16.714 <span>km²</span></div><span class="metric-note">Acumulado 2024 (até Set)</span></article>
+        <article class="metric"><div class="metric-label">Pampa</div><div class="metric-value">505 <span>km²</span></div><span class="metric-note">Acumulado 2024 (até Set)</span></article>
       </div>
       <div class="section-title-row"><div><span class="eyebrow">Ferramentas</span><h2>Escolha o que explorar</h2></div><p>Três formas de investigar os dados</p></div>
       <div class="feature-grid">
@@ -378,25 +379,48 @@
         <button class="feature" type="button" data-go="simulador"><span class="feature-icon"><svg class="ico"><use href="#icon-chart"></use></svg></span><h3>Futuro em números</h3><p>Interaja com uma função exponencial e acompanhe a evolução mensal.</p><span class="feature-bottom">Iniciar simulação <svg class="ico"><use href="#icon-arrow"></use></svg></span></button>
         <button class="feature" type="button" data-go="impactos"><span class="feature-icon"><svg class="ico"><use href="#icon-wind"></use></svg></span><h3>Conexões ambientais</h3><p>Entenda como eventos em outros biomas podem repercutir pelo país.</p><span class="feature-bottom">Conhecer impactos <svg class="ico"><use href="#icon-arrow"></use></svg></span></button>
       </div>
-      <aside class="note-banner"><svg class="ico"><use href="#icon-info"></use></svg><p><strong>Sobre os números:</strong> as áreas e o modelo matemático reproduzem os valores informados no material original do projeto. As projeções são exercícios didáticos e não dados em tempo real ou previsões oficiais.</p></aside>
+      <aside class="note-banner"><svg class="ico"><use href="#icon-info"></use></svg><p><strong>Sobre os números:</strong> As áreas e o modelo matemático reproduzem os dados do INPE consolidados até setembro de 2024 para cada bioma.</p></aside>
     </section>
 
     <!-- PÁGINA 2: GEOMETRIA -->
     <section id="geometria" class="page" data-page="geometria" aria-labelledby="geo-title" hidden>
       <div class="page-intro"><div><span class="eyebrow">Módulo 01 / Análise espacial</span><h1 id="geo-title">Geometria do desastre<span style="color:var(--ember)">.</span></h1><p>O que significam dezenas de milhares de quilômetros quadrados? Use a área de <strong style="color:#e7edf2">Jijoca de Jericoacoara (209 km²)</strong> para entender a escala das áreas queimadas registradas no estudo.</p></div><span class="chapter-number" aria-hidden="true">01</span></div>
       <div class="panel">
-        <div class="panel-head"><h2>Comparador territorial</h2><span class="mini-tag">Setembro / 2024</span></div>
-        <div class="control-row"><div class="control-field"><label for="biomaSelect">Selecione um bioma</label><select id="biomaSelect"><option value="amazonia">Amazônia — 62.925 km²</option><option value="cerrado">Cerrado — 80.029 km²</option></select></div><button type="button" class="btn btn-primary" id="projectBtn">Projetar impacto <svg class="ico"><use href="#icon-arrow"></use></svg></button></div>
-        <div class="results-top" aria-live="polite"><div><span class="result-eyebrow">Equivalente a aproximadamente</span><span id="geoNumber" class="result-number">301</span><span class="result-unit">vezes Jijoca</span></div><p class="result-explain" id="calcResult">A área queimada equivale a 301 territórios completos de Jijoca de Jericoacoara.</p></div>
-        <div class="grid-head"><strong>Visualização de equivalência</strong><span id="squareCount">301 unidades</span></div>
-        <div class="grid-box"><div class="squares" id="gridSquares" role="img" aria-label="Grade com 301 quadrados representando áreas equivalentes à extensão de Jijoca"></div></div>
+        <div class="panel-head"><h2>Comparador territorial</h2><span class="mini-tag">Até Setembro / 2024</span></div>
+        <div class="control-row">
+            <div class="control-field">
+                <label for="biomaSelect">Selecione um bioma</label>
+                <select id="biomaSelect">
+                    <option value="cerrado">Cerrado — 185.198 km²</option>
+                    <option value="amazonia">Amazônia — 151.285 km²</option>
+                    <option value="mata_atlantica">Mata Atlântica — 38.771 km²</option>
+                    <option value="pantanal">Pantanal — 21.557 km²</option>
+                    <option value="caatinga">Caatinga — 16.714 km²</option>
+                    <option value="pampa">Pampa — 505 km²</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-primary" id="projectBtn">Projetar impacto <svg class="ico"><use href="#icon-arrow"></use></svg></button>
+        </div>
+        <div class="results-top" aria-live="polite"><div><span class="result-eyebrow">Equivalente a aproximadamente</span><span id="geoNumber" class="result-number">886</span><span class="result-unit">vezes Jijoca</span></div><p class="result-explain" id="calcResult">A área queimada equivale a 886 territórios completos de Jijoca de Jericoacoara.</p></div>
+        <div class="grid-head"><strong>Visualização de equivalência</strong><span id="squareCount">886 unidades</span></div>
+        <div class="grid-box"><div class="squares" id="gridSquares" role="img" aria-label="Grade com os quadrados representando áreas equivalentes à extensão de Jijoca"></div></div>
         <div class="legend"><span class="legend-square"></span> Cada quadrado representa 209 km² — a área de referência de Jijoca.</div>
       </div>
       <div class="method-grid">
-        <article class="mini-panel"><div class="small-title">Como foi calculado?</div><p class="formula" id="geoFormula">62.925 ÷ 209 = 301,1</p><p id="geoRemainder">301 áreas completas, mais 16 km² restantes.</p></article>
-        <article class="mini-panel"><div class="small-title">Comparação entre biomas</div><div class="compare-rows"><div><div class="compare-line"><span>Amazônia</span><b>62.925 km²</b></div><div class="track"><span class="am"></span></div></div><div><div class="compare-line"><span>Cerrado</span><b>80.029 km²</b></div><div class="track"><span class="ce"></span></div></div></div></article>
+        <article class="mini-panel"><div class="small-title">Como foi calculado?</div><p class="formula" id="geoFormula">185.198 ÷ 209 = 886,1</p><p id="geoRemainder">886 áreas completas, mais 24 km² restantes.</p></article>
+        <article class="mini-panel">
+            <div class="small-title">Comparação entre biomas (2024)</div>
+            <div class="compare-rows">
+                <div><div class="compare-line"><span>Cerrado</span><b>185.198 km²</b></div><div class="track"><span style="width: 100%; background: #ff6d4d;"></span></div></div>
+                <div><div class="compare-line"><span>Amazônia</span><b>151.285 km²</b></div><div class="track"><span style="width: 81.6%; background: #fcab72;"></span></div></div>
+                <div><div class="compare-line"><span>Mata Atl.</span><b>38.771 km²</b></div><div class="track"><span style="width: 20.9%; background: #fca052;"></span></div></div>
+                <div><div class="compare-line"><span>Pantanal</span><b>21.557 km²</b></div><div class="track"><span style="width: 11.6%; background: #ffca82;"></span></div></div>
+                <div><div class="compare-line"><span>Caatinga</span><b>16.714 km²</b></div><div class="track"><span style="width: 9.0%; background: #ffe4a2;"></span></div></div>
+                <div><div class="compare-line"><span>Pampa</span><b>505 km²</b></div><div class="track"><span style="width: 0.2%; background: #fff0c2;"></span></div></div>
+            </div>
+        </article>
       </div>
-      <aside class="note-banner"><svg class="ico"><use href="#icon-info"></use></svg><p><strong>Interpretação:</strong> os quadrados representam apenas uma equivalência matemática de áreas, não municípios efetivamente atingidos. A referência territorial e os totais provêm do conteúdo original do projeto.</p></aside>
+      <aside class="note-banner"><svg class="ico"><use href="#icon-info"></use></svg><p><strong>Interpretação:</strong> os quadrados representam apenas uma equivalência matemática de áreas, não municípios efetivamente atingidos. A referência territorial e os totais provêm do conteúdo original do projeto e dados do INPE.</p></aside>
     </section>
 
     <!-- PÁGINA 3: SIMULADOR -->
@@ -443,8 +467,12 @@
       const localeInt = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 });
       const localeDecimal = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
       const data = {
-        amazonia: { name: 'Amazônia', area: 62925 },
-        cerrado: { name: 'Cerrado', area: 80029 }
+        cerrado: { name: 'Cerrado', area: 185198 },
+        amazonia: { name: 'Amazônia', area: 151285 },
+        mata_atlantica: { name: 'Mata Atlântica', area: 38771 },
+        pantanal: { name: 'Pantanal', area: 21557 },
+        caatinga: { name: 'Caatinga', area: 16714 },
+        pampa: { name: 'Pampa', area: 505 }
       };
       const cityArea = 209;
       const monthNames = ['Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro'];
@@ -476,7 +504,7 @@
       window.addEventListener('hashchange', () => showPage(location.hash.slice(1), true));
 
       function updateGeometria() {
-        const biome = data[$('biomaSelect').value] || data.amazonia;
+        const biome = data[$('biomaSelect').value] || data.cerrado;
         const ratio = Math.floor(biome.area / cityArea);
         const remaining = biome.area - ratio * cityArea;
         $('geoNumber').textContent = localeInt.format(ratio);
