@@ -3,195 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Alerta Climático EEEP Sandra Carvalho Costa (PAC-SCC)</title>
+    <title>PAC-SCC | Portal de Alerta Climático</title>
     <style>
         :root {
-            --primary: #d32f2f;
-            --secondary: #ff9800;
-            --dark: #212121;
-            --light: #f5f5f5;
+            --bg-dark: #0d1117;
+            --card-bg: #161b22;
+            --text-main: #c9d1d9;
+            --text-title: #ffffff;
+            --neon-red: #ff3333;
+            --neon-orange: #ff8800;
+            --neon-yellow: #ffcc00;
+            --accent-blue: #58a6ff;
+            --border-color: #30363d;
         }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: var(--light); 
-            color: var(--dark); 
-            margin: 0; 
-            padding: 0; 
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
         }
-        header { 
-            background-color: var(--dark); 
-            color: white; 
-            padding: 2rem; 
-            text-align: center; 
-            border-bottom: 5px solid var(--primary); 
+
+        header {
+            background: linear-gradient(135deg, #210505 0%, #0d1117 100%);
+            border-bottom: 2px solid var(--neon-red);
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(255, 51, 51, 0.15);
         }
-        .container { 
-            max-width: 1000px; 
-            margin: 0 auto; 
-            padding: 2rem; 
+
+        header h1 {
+            color: var(--text-title);
+            margin: 0 0 10px 0;
+            font-size: 2.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
         }
-        .module { 
-            background: white; 
-            border-radius: 8px; 
-            padding: 2rem; 
-            margin-bottom: 2rem; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+
+        header p {
+            color: var(--neon-orange);
+            font-size: 1.2rem;
+            margin: 0;
+            font-weight: 500;
         }
-        h1 { margin: 0; font-size: 2.2rem; }
-        h2 { 
-            color: var(--primary); 
-            border-bottom: 2px solid var(--secondary); 
-            padding-bottom: 0.5rem; 
+
+        .container {
+            max-width: 1000px;
+            margin: -20px auto 40px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .module {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .module:hover {
+            border-color: var(--neon-orange);
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: var(--text-title);
+            border-bottom: 2px solid var(--neon-orange);
+            padding-bottom: 0.8rem;
             margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .grid-container { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 2px; 
-            margin-top: 1.5rem; 
-            max-height: 400px; 
-            overflow-y: auto; 
-            background: #eee; 
-            padding: 10px; 
-            border-radius: 4px; 
+
+        /* Módulo 1 - Grid */
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
         }
-        .tiny-square { 
-            width: 16px; 
-            height: 16px; 
-            background-color: var(--primary); 
-            opacity: 0.85; 
+
+        select {
+            background: var(--bg-dark);
+            color: var(--text-title);
+            border: 1px solid var(--border-color);
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        select:focus { border-color: var(--accent-blue); }
+
+        .btn {
+            background: var(--neon-orange);
+            color: #000;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 136, 0, 0.3);
+        }
+
+        .btn:hover {
+            background: var(--neon-red);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.6);
+        }
+
+        .grid-wrapper {
+            background: #000;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .tiny-square {
+            width: 14px;
+            height: 14px;
+            background-color: var(--neon-red);
             border-radius: 2px;
+            opacity: 0;
+            transform: scale(0);
+            animation: popIn 0.3s forwards ease-out;
+            box-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
         }
-        .btn { 
-            background-color: var(--secondary); 
-            color: white; 
-            border: none; 
-            padding: 0.75rem 1.5rem; 
-            cursor: pointer; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            font-size: 1rem; 
+
+        @keyframes popIn {
+            to { opacity: 1; transform: scale(1); }
         }
-        .btn:hover { background-color: #e68a00; }
+
+        /* Módulo 2 - Simulador */
         .slider-container { margin: 2rem 0; }
-        input[type=range] { width: 100%; cursor: pointer; }
-        .bar-container { 
-            width: 100%; 
-            background-color: #ddd; 
-            border-radius: 4px; 
-            overflow: hidden; 
-            margin-top: 1rem; 
-            height: 35px;
+        
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+            margin: 20px 0;
         }
-        .sim-bar { 
-            height: 100%; 
-            width: 0%; 
-            background-color: var(--secondary); 
-            transition: width 0.4s ease, background-color 0.4s ease; 
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
         }
-        .alert-box { 
-            padding: 1rem; 
-            border-radius: 4px; 
-            margin-top: 1rem; 
-            font-weight: bold; 
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: var(--text-title);
+            margin-top: -8px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
-        footer { 
-            background: var(--dark); 
-            color: white; 
-            text-align: center; 
-            padding: 1rem; 
-            margin-top: 2rem; 
-            font-size: 0.9rem;
+
+        .bar-container {
+            width: 100%;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            height: 40px;
+            margin: 1.5rem 0;
         }
+
+        .sim-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--neon-yellow), var(--neon-orange));
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background 0.6s;
+            box-shadow: 0 0 15px rgba(255, 136, 0, 0.4);
+        }
+
+        .alert-box {
+            padding: 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .highlight { color: var(--neon-yellow); font-weight: bold; }
+
+        footer {
+            background: #000;
+            color: var(--text-main);
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Scrollbar customizada para o grid */
+        .grid-container::-webkit-scrollbar { width: 8px; }
+        .grid-container::-webkit-scrollbar-track { background: var(--bg-dark); }
+        .grid-container::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Portal de Alerta Climático</h1>
-    <p>EEEP Sandra Carvalho Costa (PAC-SCC) - Do Brasil a Jijoca de Jericoacoara</p>
+    <p>EEEP Sandra Carvalho Costa • Análise Espacial e Matemática Aplicada</p>
 </header>
 
 <div class="container">
     
-    <!-- Módulo 1 -->
     <section class="module">
-        <h2>1. Geometria do Desastre</h2>
-        <p>A pesquisa original utilizou o município de Fortaleza, com área territorial de 312 km², como base[cite: 4, 8, 9]. Para um impacto ainda mais direto em nossa comunidade, recalculamos as proporções utilizando a extensão territorial de <strong>Jijoca de Jericoacoara</strong> (209 km²).</p>
-        <p>Em setembro de 2024, a área queimada no bioma Amazônia foi de 62.925 km²[cite: 4, 8, 9]. No mesmo mês, o bioma Cerrado registrou uma destruição de 80.029 km²[cite: 4, 9]. Selecione o bioma para visualizar quantas "Jijocas" desapareceram em apenas 30 dias.</p>
+        <h2>🔥 1. Geometria do Desastre</h2>
+        <p>A pesquisa original adotou o município de Fortaleza (312 km²) como parâmetro base de área geométrica[cite: 4, 8, 9]. Para contextualizar a escala do fenômeno na nossa comunidade, recalculamos as proporções utilizando o território exato de <strong>Jijoca de Jericoacoara (209 km²)</strong>.</p>
+        <p>No mês de setembro de 2024, as cicatrizes de fogo consumiram 62.925 km² no bioma Amazônia[cite: 4, 5, 9] e 80.029 km² no bioma Cerrado[cite: 4, 6, 9]. Selecione a região e visualize quantas vezes o nosso município caberia dentro da área destruída em apenas 30 dias.</p>
         
-        <div style="margin: 1.5rem 0;">
-            <label for="biomaSelect"><strong>Selecione o Bioma Destruído:</strong></label><br>
-            <select id="biomaSelect" style="padding: 0.5rem; font-size: 1rem; margin-top: 0.5rem;">
-                <option value="amazonia">Amazônia - Setembro/2024 (62.925 km²)</option>
-                <option value="cerrado">Cerrado - Setembro/2024 (80.029 km²)</option>
+        <div class="controls">
+            <select id="biomaSelect">
+                <option value="amazonia">Bioma Amazônia (62.925 km²)</option>
+                <option value="cerrado">Bioma Cerrado (80.029 km²)</option>
             </select>
-            <button class="btn" onclick="updateGeometria()" style="margin-left: 10px;">Aplicar Proporção</button>
+            <button class="btn" onclick="updateGeometria()">Projetar Impacto</button>
         </div>
 
-        <div id="calcResult" style="font-size: 1.2rem; color: var(--primary);"></div>
-        <div class="grid-container" id="gridSquares"></div>
+        <p id="calcResult" style="font-size: 1.3rem; margin-bottom: 15px; color: var(--text-title);"></p>
+        
+        <div class="grid-wrapper">
+            <div class="grid-container" id="gridSquares"></div>
+        </div>
     </section>
 
-    <!-- Módulo 2 -->
     <section class="module">
-        <h2>2. O Futuro em Números (Simulador Exponencial)</h2>
-        <p>O acompanhamento oficial demonstrou que o valor inicial da área queimada era de 2.052 km² no mês de abril[cite: 2]. O avanço não linear das chamas sugeriu a adoção de um modelo matemático, regido pela função f(x) = 2052 * 2^x[cite: 2].</p>
-        <p>Esta função revela que o estrago dobra a cada mês durante a fase mais seca[cite: 2]. Use o controle abaixo para observar a catástrofe matemática.</p>
+        <h2>📈 2. O Futuro em Números (Simulador Exponencial)</h2>
+        <p>A série histórica indicou uma área queimada inicial de 2.052 km² no mês de abril[cite: 2]. O comportamento dos dados não formava uma linha reta, indicando que a área tendia a dobrar a cada mês durante a fase crítica da seca, regida pela função exponencial <span class="highlight">f(x) = 2052 · 2^x</span>[cite: 2].</p>
+        <p>Ajuste a linha do tempo abaixo para prever o cenário. Os recursos de Defesa Civil devem ser alocados baseados nesta aceleração vertiginosa[cite: 2, 3].</p>
         
         <div class="slider-container">
-            <label for="monthSlider"><strong>Mês de avanço da seca (x): <span id="monthValue">0</span> (Abril)</strong></label>
+            <label for="monthSlider" style="font-size: 1.1rem;">
+                Avanço do tempo (x): <span class="highlight" id="monthValue">0 meses após Abril</span>
+            </label>
             <input type="range" id="monthSlider" min="0" max="6" value="0" oninput="updateSimulator()">
         </div>
 
-        <div id="simResult" style="font-size: 1.5rem; text-align: center;">Área Projetada: <strong>2.052 km²</strong></div>
+        <div id="simResult" style="font-size: 1.8rem; text-align: center; color: var(--text-title); margin-bottom: 10px;">
+            Projeção: <strong>2.052 km²</strong>
+        </div>
+        
         <div class="bar-container">
             <div class="sim-bar" id="simBar" style="width: 2%;"></div>
         </div>
         
-        <div class="alert-box" id="simAlert" style="background-color: #e2e3e5; color: #383d41;">
-            Situação sob controle inicial.
+        <div class="alert-box" id="simAlert" style="background: rgba(255,204,0,0.1); color: var(--neon-yellow); border: 1px solid var(--neon-yellow);">
+            🟢 Fase Inicial: Crescimento sob análise.
         </div>
-        <p style="margin-top: 1rem; font-size: 0.85rem; color: #555;">* A projeção calculada pela função para o quinto mês (setembro) totalizou 65.664 km²[cite: 3]. Este módulo reflete o conceito de gatilhos de alerta automático criados para sistemas da Defesa Civil[cite: 3].</p>
+        
+        <p style="margin-top: 1.5rem; font-size: 0.9rem; color: #8b949e;">
+            * Ao atingir x = 5 (setembro), a função projetou 65.664 km²[cite: 3]. Este sistema ilustra os gatilhos de alerta automático: se a taxa de crescimento superar limites seguros, decreta-se emergência[cite: 3].
+        </p>
     </section>
 
-    <!-- Módulo 3 -->
     <section class="module">
-        <h2>3. Conexão Jijoca e Caatinga</h2>
-        <p>A configuração espacial dessa destruição ambiental afeta a vida coletiva muito além das suas bordas[cite: 4]. O que a matemática modelou acima resulta em um desastre climático em cadeia:</p>
-        <ul style="line-height: 1.6;">
-            <li>Uma extensão continental de queimadas nestes biomas altera os microclimas do país todo[cite: 4].</li>
-            <li>As cinzas e fumaças comprometem severamente a saúde pública e a qualidade do ar, atingindo locais distantes[cite: 4].</li>
-            <li>A alteração nas chuvas agrava as estiagens na Caatinga e impacta o turismo sustentável no Parque Nacional de Jericoacoara.</li>
-            <li>Demonstrar visualmente que as manchas de calor equivalem a centenas de cidades gera uma percepção real da dimensão do impacto[cite: 8, 9].</li>
+        <h2>🌪️ 3. Conexão Jijoca e Caatinga</h2>
+        <p>Embora a Amazônia e o Brasil Central sejam os epicentros da vulnerabilidade[cite: 4], a física da atmosfera não respeita divisas estaduais:</p>
+        <ul style="line-height: 1.8;">
+            <li>Uma extensão continental de queimadas altera os microclimas, envia fuligem pelo país e compromete severamente a saúde pública e a qualidade do ar muito além das fronteiras originais[cite: 4].</li>
+            <li>A alteração na umidade influencia a incidência de chuvas na Caatinga e os regimes de vento do Parque Nacional de Jericoacoara.</li>
+            <li>Demonstrar, por meio da proporcionalidade, que as manchas englobam o equivalente a centenas de cidades ajuda a traduzir números abstratos em mobilização social efetiva[cite: 8, 9].</li>
         </ul>
     </section>
 
 </div>
 
 <footer>
-    <p>Criado para o Portal de Alerta Climático - EEEP Sandra Carvalho Costa. Design com HTML, CSS e Matemática Aplicada.</p>
+    <p>Projeto Desenvolvido para a Maratona Cearense de Matemática<br>
+    <span style="font-size: 0.8rem; color: #8b949e;">Design Gráfico, UI/UX e Matemática Computacional.</span></p>
 </footer>
 
 <script>
     function updateGeometria() {
         const biome = document.getElementById("biomaSelect").value;
         const area = biome === 'amazonia' ? 62925 : 80029;
-        const cityArea = 209;
+        const cityArea = 209; 
         const ratio = Math.floor(area / cityArea);
         
         const resultDiv = document.getElementById("calcResult");
         const biomeName = biome === 'amazonia' ? 'na Amazônia' : 'no Cerrado';
         
-        resultDiv.innerHTML = `A área queimada ${biomeName} engoliria aproximadamente <strong>${ratio} vezes</strong> o território de Jijoca de Jericoacoara!`;
+        resultDiv.innerHTML = `O fogo ${biomeName} consumiu o equivalente a <span class="highlight">${ratio} vezes</span> a extensão de Jijoca de Jericoacoara.`;
         
         const grid = document.getElementById("gridSquares");
         grid.innerHTML = "";
+        
+        // Animação de alastramento com delay progressivo
         for(let i = 0; i < ratio; i++) {
-            let sq = document.createElement("div");
-            sq.className = "tiny-square";
-            sq.title = "1 Jijoca de Jericoacoara (209 km²)";
-            grid.appendChild(sq);
+            setTimeout(() => {
+                let sq = document.createElement("div");
+                sq.className = "tiny-square";
+                sq.title = "1x Jijoca de Jericoacoara (209 km²)";
+                grid.appendChild(sq);
+            }, i * 3); // 3ms delay por quadrado
         }
     }
 
@@ -203,8 +337,10 @@
         const monthNames = ["Abril (x=0)", "Maio (x=1)", "Junho (x=2)", "Julho (x=3)", "Agosto (x=4)", "Setembro (x=5)", "Outubro (x=6)"];
         document.getElementById("monthValue").innerText = monthNames[month];
         
-        document.getElementById("simResult").innerHTML = `Área Projetada: <strong>${projectedArea.toLocaleString('pt-BR')} km²</strong>`;
+        // Formata com separador de milhar
+        document.getElementById("simResult").innerHTML = `Projeção: <strong>${projectedArea.toLocaleString('pt-BR')} km²</strong>`;
         
+        // A barra usa base logarítmica ou limite máximo para não estourar rápido
         const maxArea = initial * Math.pow(2, 6);
         const percent = (projectedArea / maxArea) * 100;
         const bar = document.getElementById("simBar");
@@ -213,24 +349,26 @@
         const alertBox = document.getElementById("simAlert");
         
         if (month <= 1) {
-            bar.style.backgroundColor = "#ffc107";
-            alertBox.style.backgroundColor = "#fff3cd";
-            alertBox.style.color = "#856404";
-            alertBox.innerText = "Alerta Amarelo: Aceleração iniciada.";
+            bar.style.background = "linear-gradient(90deg, #ffcc00, #ff9500)";
+            alertBox.style.background = "rgba(255,204,0,0.1)";
+            alertBox.style.color = "var(--neon-yellow)";
+            alertBox.style.borderColor = "var(--neon-yellow)";
+            alertBox.innerText = "⚠️ Alerta Amarelo: Aceleração da seca iniciada.";
         } else if (month <= 3) {
-            bar.style.backgroundColor = "#fd7e14";
-            alertBox.style.backgroundColor = "#f8d7da";
-            alertBox.style.color = "#721c24";
-            alertBox.innerText = "Alerta Laranja: Gatilho de Alerta Automático de Defesa Civil Ativado!";
+            bar.style.background = "linear-gradient(90deg, #ff9500, #ff3333)";
+            alertBox.style.background = "rgba(255,136,0,0.1)";
+            alertBox.style.color = "var(--neon-orange)";
+            alertBox.style.borderColor = "var(--neon-orange)";
+            alertBox.innerText = "🚨 Alerta Laranja: Gatilho de Defesa Civil Ativado. Taxa multiplicando!";
         } else {
-            bar.style.backgroundColor = "#d32f2f";
-            alertBox.style.backgroundColor = "#721c24";
-            alertBox.style.color = "#fff";
-            alertBox.innerText = "Emergência Nacional! Destruição matemática em proporções incontroláveis.";
+            bar.style.background = "linear-gradient(90deg, #ff3333, #8b0000)";
+            alertBox.style.background = "rgba(255,51,51,0.15)";
+            alertBox.style.color = "var(--neon-red)";
+            alertBox.style.borderColor = "var(--neon-red)";
+            alertBox.innerText = "🆘 Emergência Nacional! A expansão fugiu da capacidade de resposta linear.";
         }
     }
 
-    // Dispara a visualização automaticamente ao carregar
     window.onload = function() {
         updateGeometria();
     };
