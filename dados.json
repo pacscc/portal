@@ -291,12 +291,12 @@
     "cerrado": {
       "nome": "Cerrado",
       "mensal": [3394, 1939, 2296, 3603, 5762, 7683, 14742, 26418, 22752, 9456, 2874, 2208],
-      "total": 103127
+      "total": 106000
     },
     "amazonia": {
       "nome": "Amazonia",
       "mensal": [5019, 3454, 2805, 4869, 7176, 9822, 24762, 37860, 28797, 13807, 4943, 3381],
-      "total": 146695
+      "total": 156000
     },
     "mata_atlantica": {
       "nome": "Mata Atlântica",
@@ -306,7 +306,7 @@
     "pantanal": {
       "nome": "Pantanal",
       "mensal": [405, 208, 281, 353, 587, 777, 1771, 3113, 2395, 968, 327, 225],
-      "total": 11410
+      "total": 19800
     },
     "caatinga": {
       "nome": "Caatinga",
